@@ -1,9 +1,9 @@
-import CalcGPA from "@/components/CalcGPA";
+import BookDisplay from "@/components/HomePage";
 
 export default function Home() {
   return (
 <main>
-<CalcGPA/>
+<BookDisplay/>
 </main>
   );
 }

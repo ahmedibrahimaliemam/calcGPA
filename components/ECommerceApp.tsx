@@ -1,4 +1,4 @@
-// pages/index.tsx
+
 "use client"
 import { useState, useEffect, createContext, useContext } from 'react';
 import Image from 'next/image';
@@ -38,7 +38,7 @@ const products: Product[] = [
   { id: 4, name: "Glass", price: 60, image: "https://github.com/ahmedibrahimaliemam/react-redux-tool-kit/blob/master/public/imgs/chair.jpg?raw=true" },
   { id: 5, name: "Chair", price: 50.33, image: "https://github.com/ahmedibrahimaliemam/react-redux-tool-kit/blob/master/public/imgs/dell.jpg?raw=true" },
   { id: 6, name: "Glass", price: 60, image: "https://github.com/ahmedibrahimaliemam/react-redux-tool-kit/blob/master/public/imgs/head.jpg?raw=true" },
-  // ... Add all your products here
+
 ];
 
 export default function ECommerceApp() {
@@ -46,12 +46,10 @@ export default function ECommerceApp() {
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   
-  // State management
   const [cart, setCart] = useState<CartItem[]>([]);
   const [favorites, setFavorites] = useState<Product[]>([]);
   const [user, setUser] = useState<string | null>(null);
 
-  // Load initial state from localStorage
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
     const savedFavorites = localStorage.getItem('favorites');
@@ -62,13 +60,13 @@ export default function ECommerceApp() {
     if (savedUser) setUser(savedUser);
   }, []);
 
-  // Save state to localStorage
+
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }, [cart, favorites]);
 
-  // Cart functions
+
   const addToCart = (product: Product) => {
     setCart(prev => {
       const existing = prev.find(item => item.id === product.id);
@@ -99,7 +97,7 @@ export default function ECommerceApp() {
 
   const clearCart = () => setCart([]);
 
-  // Favorite functions
+
   const addToFavorites = (product: Product) => {
     setFavorites(prev => 
       prev.some(f => f.id === product.id) ? prev : [...prev, product]
@@ -110,7 +108,7 @@ export default function ECommerceApp() {
     setFavorites(prev => prev.filter(item => item.id !== productId));
   };
 
-  // Auth functions
+
   const login = (email: string, password: string) => {
     const storedEmail = localStorage.getItem('email');
     const storedPassword = localStorage.getItem('password');
@@ -163,7 +161,7 @@ export default function ECommerceApp() {
     }
   };
 
-  // Calculate total price
+  
   const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
 
   return (
@@ -181,7 +179,7 @@ export default function ECommerceApp() {
       register
     }}>
       <div className="min-h-screen bg-gray-100">
-        {/* Navigation */}
+        {/* nav */}
         <nav className="bg-blue-600 text-white shadow-lg">
           <div className="container mx-auto px-4 py-3 flex justify-between items-center">
             <button onClick={() => setView('products')} className="text-xl font-bold">
@@ -224,7 +222,7 @@ export default function ECommerceApp() {
           </div>
         </nav>
 
-        {/* Main Content */}
+        {/* main*/}
         <main className="container mx-auto px-4 py-8">
           {view === 'products' && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -274,14 +272,14 @@ export default function ECommerceApp() {
 
           {view === 'cart' && (
             <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-2xl font-bold mb-6">Shopping Cart</h2>
+              <h2 className="text-2xl font-bold mb-6 text-black">Shopping Cart</h2>
               {cart.length === 0 ? (
-                <p className="text-gray-500">Your cart is empty</p>
+                <p className="text-gray-500 text-black">Your cart is empty</p>
               ) : (
                 <>
                   <div className="space-y-4 mb-6">
                     {cart.map((item) => (
-                      <div key={item.id} className="flex items-center justify-between border-b pb-4">
+                      <div key={item.id} className="flex items-center justify-between border-b pb-4 text-black">
                         <div className="flex items-center gap-4">
                           <div className="relative w-16 h-16">
                             <Image
@@ -293,8 +291,8 @@ export default function ECommerceApp() {
                             />
                           </div>
                           <div>
-                            <h4 className="font-semibold">{item.name}</h4>
-                            <p className="text-gray-500">${item.price.toFixed(2)}</p>
+                            <h4 className="font-semibold text-black">{item.name}</h4>
+                            <p className="text-gray-500 text-black">${item.price.toFixed(2)}</p>
                           </div>
                         </div>
                         
@@ -306,7 +304,7 @@ export default function ECommerceApp() {
                             >
                               -
                             </button>
-                            <span>{item.quantity}</span>
+                            <span className="text-black">{item.quantity}</span>
                             <button
                               onClick={() => addToCart(item)}
                               className="bg-gray-200 px-3 py-1 rounded"
@@ -326,7 +324,7 @@ export default function ECommerceApp() {
                   </div>
                   
                   <div className="flex justify-between items-center">
-                    <p className="text-xl font-bold">Total: ${totalPrice.toFixed(2)}</p>
+                    <p className="text-xl font-bold text-black">Total: ${totalPrice.toFixed(2)}</p>
                     <button className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600">
                       Checkout
                     </button>
@@ -336,11 +334,11 @@ export default function ECommerceApp() {
             </div>
           )}
 
-          {/* Add similar sections for favorites and auth */}
+         
           
   {view === 'favorites' && (
     <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-bold mb-6">Favorites</h2>
+      <h2 className="text-2xl font-bold mb-6 text-black">Favorites</h2>
       {favorites.length === 0 ? (
         <p className="text-gray-500">No favorites added</p>
       ) : (
@@ -356,9 +354,9 @@ export default function ECommerceApp() {
                   className="rounded"
                 />
               </div>
-              <h4 className="font-semibold">{product.name}</h4>
+              <h4 className="font-semibold text-black">{product.name}</h4>
               <div className="flex justify-between items-center mt-2">
-                <p>${product.price.toFixed(2)}</p>
+                <p className="text-black">${product.price.toFixed(2)}</p>
                 <button
                   onClick={() => removeFromFavorites(product.id)}
                   className="text-red-500 hover:text-red-700"
@@ -375,14 +373,14 @@ export default function ECommerceApp() {
   {view === 'auth' && (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
       <div className="bg-white rounded-lg p-6 w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6">
+        <h2 className="text-2xl font-bold mb-6 text-black">
           {authMode === 'login' ? 'Sign In' : 'Register'}
         </h2>
         
         <form onSubmit={handleAuthSubmit} className="space-y-4">
           {authMode === 'register' && (
             <div>
-              <label className="block mb-2">Name</label>
+              <label className="block mb-2 text-black">Name</label>
               <input
                 type="text"
                 required
@@ -397,7 +395,7 @@ export default function ECommerceApp() {
           )}
           
           <div>
-            <label className="block mb-2">Email</label>
+            <label className="block mb-2 text-black">Email</label>
             <input
               type="email"
               required
@@ -411,7 +409,7 @@ export default function ECommerceApp() {
           </div>
           
           <div>
-            <label className="block mb-2">Password</label>
+            <label className="block mb-2 text-black">Password</label>
             <input
               type="password"
               required
